@@ -26,8 +26,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware([\App\Http\Middleware\RestrictAccess::class])->group(function () {
+        Route::get('/companies/data', [CompanyController::class, 'data']);
+        
         Route::resource('companies', CompanyController::class);
         Route::resource('employees', EmployeeController::class);
+
+        
     });
     
 });

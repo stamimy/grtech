@@ -6,6 +6,8 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use App\Http\Resources\CompanyResource;
 
 class CompanyController extends Controller
 {
@@ -16,6 +18,22 @@ class CompanyController extends Controller
     {
         $companies = Company::all()->load('employees');;
         return Inertia::render('Company/Index', ['companies' => $companies]);
+    }
+
+    public function data(Request $request)
+    {
+        $companies = Company::query();
+
+        // Apply search filters
+        if ($request->has('search')) {
+            $companies->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Paginate the results
+        $data = $companies->paginate($request->get('per_page', 10));
+
+        // Return a paginated resource collection
+        return CompanyResource::collection($data);
     }
 
     /**

@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployeeController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -26,6 +27,7 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware([\App\Http\Middleware\RestrictAccess::class])->group(function () {
         Route::resource('companies', CompanyController::class);
+        Route::resource('employees', EmployeeController::class);
     });
     
 });

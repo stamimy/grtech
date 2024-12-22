@@ -13,4 +13,16 @@ class Company extends Model
     protected $fillable = [
         'name', 'email', 'logo', 'website'
     ];
+
+    protected $appends = ['employees_num'];
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
+
+    public function getEmployeesNumAttribute()
+    {
+        return $this->employees->count();
+    }
 }

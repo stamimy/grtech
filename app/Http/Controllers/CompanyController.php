@@ -14,7 +14,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::all();
+        $companies = Company::all()->load('employees');;
         return Inertia::render('Company/Index', ['companies' => $companies]);
     }
 

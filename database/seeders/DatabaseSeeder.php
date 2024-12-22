@@ -27,5 +27,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@grtech.com',
             'password' => Hash::make('password')
         ]);
+
+        \App\Models\Company::factory(10)->create();
+        \App\Models\Employee::factory(10)->create();
     }
 }

@@ -35,6 +35,7 @@ const deletecompany = (id) => {
                                 <th class="border px-4 py-2">ID</th>
                                 <th class="border px-4 py-2">Name</th>
                                 <th class="border px-4 py-2">Email</th>
+                                <th class="border px-4 py-2">∑ Employees</th>
                                 <th class="border px-4 py-2" width="250px">Action</th>
                               </tr>
                               </thead>
@@ -43,6 +44,7 @@ const deletecompany = (id) => {
                                   <td class="border px-4 py-2">{{ company.id }}</td>
                                   <td class="border px-4 py-2">{{ company.name }}</td>
                                   <td class="border px-4 py-2">{{ company.email }}</td>
+                                  <td class="border px-4 py-2 text-right">{{ company.employees_num }}</td>
                                   <td class="border px-4 py-2">
                                     <Link :href="`companies/${company.id}/edit`"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button></Link>
                                     <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2" @click="deletecompany(company.id)">Delete</button>

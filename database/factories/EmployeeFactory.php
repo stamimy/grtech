@@ -16,8 +16,14 @@ class EmployeeFactory extends Factory
      */
     public function definition(): array
     {
+        $companyIds = \App\Models\Company::pluck('id')->toArray();
+
         return [
-            //
+            'firstname' => fake()->firstName(),
+            'lastname' => fake()->lastName(),
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
+            'company_id' => fake()->randomElement($companyIds),
         ];
     }
 }

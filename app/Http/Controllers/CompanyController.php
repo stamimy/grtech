@@ -20,22 +20,6 @@ class CompanyController extends Controller
         return Inertia::render('Company/Index', ['companies' => $companies]);
     }
 
-    public function data(Request $request)
-    {
-        $companies = Company::query();
-
-        // Apply search filters
-        if ($request->has('search')) {
-            $companies->where('name', 'like', '%' . $request->search . '%');
-        }
-
-        // Paginate the results
-        $data = $companies->paginate($request->get('per_page', 10));
-
-        // Return a paginated resource collection
-        return CompanyResource::collection($data);
-    }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -87,5 +71,22 @@ class CompanyController extends Controller
     {
         $company->delete();
         return redirect()->back();
+    }
+
+    // API
+    public function data(Request $request)
+    {
+        $companies = Company::query();
+
+        // Apply search filters
+        if ($request->has('search')) {
+            $companies->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Paginate the results
+        $data = $companies->paginate($request->get('per_page', 10));
+
+        // Return a paginated resource collection
+        return CompanyResource::collection($data);
     }
 }

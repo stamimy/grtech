@@ -11,7 +11,8 @@ class UpdateCompanyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        // this is set to true to simplify things. the current checking is handled in routes/web.php
+        return true;
     }
 
     /**

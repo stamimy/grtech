@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Modal } from 'ant-design-vue';
 
 defineProps({
   employees: {
@@ -12,8 +13,16 @@ defineProps({
 const form = useForm({});
 
 const deleteEmployee = (id) => {
-    form.delete(`employees/${id}`);
+  Modal.confirm({
+      title: 'Are you sure you want to delete this employee?',
+      onOk() {
+        form.delete(`employees/${id}`);
+      },
+  });
+
+    
 };
+
 </script>
 
 <template>

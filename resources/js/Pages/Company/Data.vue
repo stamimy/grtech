@@ -21,7 +21,13 @@
                         >
 
                         <template #bodyCell="{ record,column }">
+                            <template v-if="column.key === 'action'">
+                                
+                                <Link :href="`companies/${record.id}/edit`"><a >Edit</a></Link>
+                            </template>
+
                             <template v-if="column.key === 'action' && record.employees_num === 0">
+                                <a-divider type="vertical" />
                                 <a-popconfirm
                                 v-if="dataSource.length"
                                 title="Sure to delete?"
@@ -73,7 +79,7 @@
         title: 'Action',
         key: 'action',
         fixed: 'right',
-        width: 100,
+        width: 150,
     }
   ];
 

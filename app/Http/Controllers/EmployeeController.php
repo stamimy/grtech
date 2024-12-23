@@ -63,7 +63,8 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        $companies = Company::all();
+        return Inertia::render('Employee/Edit', ['employee' => $employee, 'companies' => $companies]);
     }
 
     /**
@@ -71,7 +72,16 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
-        //
+        $employee->update(
+            [
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'email' => $request->email,
+                //'phone' => $request->phone,
+                'company_id' => $request->company_id['id']
+            ]
+            );
+        return redirect()->route('employees.index');
     }
 
     /**

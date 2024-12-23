@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employee;
+use App\Models\Company;
 use Inertia\Inertia;
 
 class EmployeeController extends Controller
@@ -23,7 +24,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::all();
+        return Inertia::render('Employee/Create', ['companies' => $companies]);
     }
 
     /**
@@ -31,7 +33,21 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        //
+        //dd($request->company_id['id']);
+        //$employee = new Employee($request->all());
+        $employee = new Employee(
+            [
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'email' => $request->email,
+                //'phone' => $request->phone,
+                'company_id' => $request->company_id['id']
+            ]
+            );
+
+        $employee->save();
+
+        return redirect()->route('employees.index');
     }
 
     /**

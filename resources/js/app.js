@@ -8,7 +8,9 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
-//import 'ant-design-vue/dist/antd.variable.min.css'; 
+
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -24,6 +26,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(Antd)
+            .component('v-select', vSelect)
             .mount(el);
     },
     progress: {

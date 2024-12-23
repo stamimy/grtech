@@ -8,6 +8,7 @@ use App\Models\Company;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Resources\CompanyResource;
+use App\Http\Resources\CompanyCollection;
 
 class CompanyController extends Controller
 {
@@ -16,8 +17,29 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::all()->load('employees');;
-        return Inertia::render('Company/Index', ['companies' => $companies]);
+        //$companies = Company::all()->load('employees');;
+        //return Inertia::render('Company/Index', ['companies' => $companies]);
+
+        return Inertia::render('Company/Data');
+    }
+
+    // API
+    public function data(Request $request)
+    {
+        $companies = Company::query();
+
+        // Apply search filters
+        if ($request->has('search')) {
+            $companies->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Paginate the results
+        $data = $companies->paginate($request->get('per_page', $request->get('results')));
+
+        // Return a paginated resource collection
+        return CompanyResource::collection($data);
+
+        //return new CompanyCollection(Company::paginate($request->get('per_page', $request->get('results'))));
     }
 
     /**
@@ -70,23 +92,6 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         $company->delete();
-        return redirect()->back();
-    }
-
-    // API
-    public function data(Request $request)
-    {
-        $companies = Company::query();
-
-        // Apply search filters
-        if ($request->has('search')) {
-            $companies->where('name', 'like', '%' . $request->search . '%');
-        }
-
-        // Paginate the results
-        $data = $companies->paginate($request->get('per_page', 10));
-
-        // Return a paginated resource collection
-        return CompanyResource::collection($data);
+        //return redirect()->back();
     }
 }
